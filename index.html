@@ -1,0 +1,1911 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KatraCoffee - Máy pha cafe cầm tay Cera, Hà An Trà & Cà Phê Hạt</title>
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./reset.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header-sticky">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="#">
+                        <span class="logo-icon">
+                            <img src="img/katra.jpg" alt="KatraCoffee Logo" style="width: 2.5rem; height: 2.5rem; object-fit: contain;" />
+                        </span>
+                        KatraCoffee
+                    </a>
+                </div>
+
+<div id="toast-order" style="display:none; position:fixed; left:50%; top:50%; transform:translate(-50%,-50%); min-width:320px; max-width:90vw; background:#fff; border:2px solid #a67c52; color:#3a2c1a; font-weight:500; font-size:1.08rem; border-radius:14px; box-shadow:0 8px 32px rgba(0,0,0,0.18); z-index:9999; padding:1.5rem 2rem 2.2rem 2rem; text-align:center; opacity:0; transition:opacity 0.5s;">
+    <div style="font-size:2.2rem; margin-bottom:0.5rem;">✔️</div>
+    <div id="toast-order-msg" style="font-size:1.15rem; line-height:1.5;"></div>
+    <button id="toast-order-close" style="margin-top:1.2rem; background:#a67c52; color:#fff; border:none; border-radius:8px; padding:0.6rem 1.3rem; font-size:1rem; font-weight:500; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.08);">Đóng</button>
+</div>
+
+                <div class="search-bar">
+                    <input id="search-input" type="text" placeholder="Tìm kiếm sản phẩm..." autocomplete="off" aria-label="Tìm kiếm sản phẩm">
+                    <button class="search-button" id="search-button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <div class="search-suggestions" id="search-suggestions" role="listbox" aria-label="Gợi ý tìm kiếm" aria-hidden="true"></div>
+                </div>
+                <div class="header-row" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; margin-top: 0.5rem; width: 100%;">
+                  <button class="menu-toggle" aria-label="Mở menu" style="display:none">
+                      <span class="bar"></span>
+                      <span class="bar"></span>
+                      <span class="bar"></span>
+                  </button>
+                  <div class="header-actions">
+                      <a href="#" class="action-link cart-link">
+                          <i class="fas fa-shopping-cart"></i>
+                          <span class="cart-count">0</span>
+                      </a>
+                      <a href="#" class="action-link log"><i class="fas fa-user"></i> <span class="action-text">Đăng nhập</span></a>
+                      <a href="#" class="action-link register"><i class="fas fa-user-plus"></i> <span class="action-text">Đăng ký</span></a>
+                  </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        
+        <nav class="main-nav">
+            <div class="container">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#" class="nav-link nav-btn" data-section="home">Trang chủ</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link nav-btn" data-section="about">Giới thiệu</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link nav-btn" data-section="cera">Máy Cera</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link nav-btn" data-section="tea">Hà An Trà</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link nav-btn" data-section="coffee">Cafe Hạt</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link nav-btn" data-section="capsule">Viên Nén</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link nav-btn" data-section="contact">Liên hệ</a></li>
+                </ul>
+            </div>
+        </nav>
+        </header>
+
+
+            <div id="cart-modal" class="modal" style="display:none;">
+                <div class="modal-content cart-modal-content" style="max-width: 420px; padding: 20px; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.18); background: #fff;">
+                    <span class="close-modal" data-modal="cart-modal" style="font-size: 2rem; color: #888; position: absolute; top: 18px; right: 24px; cursor: pointer;">&times;</span>
+                    <h2 class="cart-title" style="text-align:center; font-size:1.5rem; font-weight:600; margin-bottom:1.2rem; color:#3a2c1a;"><i class="fas fa-shopping-cart"></i> Giỏ hàng</h2>
+                    <div class="cart-items">
+                        <div class="cart-item empty">Chưa có sản phẩm nào trong giỏ hàng.</div>
+                    </div>
+                    <div class="cart-footer">
+                        <span class="cart-total-label">Tổng:</span>
+                        <span class="cart-total-price">0₫</span>
+                        <button class="btn btn-checkout" disabled>Thanh toán</button>
+                    </div>
+                </div>
+            </div>
+            <div id="login-modal" class="modal" style="display:none;">
+                <div class="modal-content auth-modal">
+                    <span class="close-modal" data-modal="login-modal">&times;</span>
+                    <h2 class="auth-title">Đăng nhập</h2>
+                    <form class="login-form">
+                        <div class="form-group">
+                            <label for="login-email">Email</label>
+                            <div class="input-icon">
+                                <i class="fas fa-envelope"></i>
+                                <input id="login-email" type="email" required placeholder="Nhập email hoặc số điện thoại">
+                            </div>
+                            <div class="form-error" id="login-email-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Mật khẩu</label>
+                            <div class="input-icon">
+                                <i class="fas fa-lock"></i>
+                                <input id="login-password" type="password" required placeholder="Nhập mật khẩu">
+                            </div>
+                            <div class="form-error" id="login-password-error"></div>
+                        </div>
+                        <div class="form-row">
+                            <label class="remember-label"><input type="checkbox" id="remember-me"> Ghi nhớ đăng nhập</label>
+                            <a href="#" class="forgot-link">Quên mật khẩu?</a>
+                        </div>
+                        <button type="submit" class="btn btn-primary auth-btn" id="login-submit">
+                            <span class="btn-text">Đăng nhập</span>
+                            <span class="btn-loading" style="display:none"><i class="fas fa-spinner fa-spin"></i></span>
+                        </button>
+                        <div class="auth-or"><span>hoặc</span></div>
+                        <div class="social-login">
+                            <button type="button" class="btn-social google"><i class="fab fa-google"></i> Google</button>
+                            <button type="button" class="btn-social facebook"><i class="fab fa-facebook-f"></i> Facebook</button>
+                        </div>
+                        <div class="form-success" id="login-success"></div>
+                        <div class="form-error" id="login-fail"></div>
+                        <div class="auth-switch">Chưa có tài khoản? <a href="#" id="show-register">Đăng ký</a></div>
+                    </form>
+                </div>
+            </div>
+
+            
+            <div id="register-modal" class="modal" style="display:none;">
+                <div class="modal-content auth-modal">
+                    <span class="close-modal" data-modal="register-modal">&times;</span>
+                    <h2 class="auth-title">Đăng ký</h2>
+                    <form class="register-form">
+                        <div class="form-group">
+                            <label for="register-name">Họ và tên</label>
+                            <div class="input-icon">
+                                <i class="fas fa-user"></i>
+                                <input id="register-name" type="text" required placeholder="Nhập họ tên">
+                            </div>
+                            <div class="form-error" id="register-name-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-email">Email</label>
+                            <div class="input-icon">
+                                <i class="fas fa-envelope"></i>
+                                <input id="register-email" type="email" required placeholder="Nhập email">
+                            </div>
+                            <div class="form-error" id="register-email-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-password">Mật khẩu</label>
+                            <div class="input-icon">
+                                <i class="fas fa-lock"></i>
+                                <input id="register-password" type="password" required placeholder="Tạo mật khẩu">
+                            </div>
+                            <div class="form-error" id="register-password-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-password2">Xác nhận mật khẩu</label>
+                            <div class="input-icon">
+                                <i class="fas fa-lock"></i>
+                                <input id="register-password2" type="password" required placeholder="Nhập lại mật khẩu">
+                            </div>
+                            <div class="form-error" id="register-password2-error"></div>
+                        </div>
+                        <div class="form-row">
+                            <label class="remember-label"><input type="checkbox" id="agree-term" required> Tôi đồng ý với <a href="#">điều khoản</a></label>
+                        </div>
+                        <button type="submit" class="btn btn-primary auth-btn" id="register-submit">
+                            <span class="btn-text">Đăng ký</span>
+                            <span class="btn-loading" style="display:none"><i class="fas fa-spinner fa-spin"></i></span>
+                        </button>
+                        <div class="auth-or"><span>hoặc</span></div>
+                        <div class="social-login">
+                            <button type="button" class="btn-social google"><i class="fab fa-google"></i> Google</button>
+                            <button type="button" class="btn-social facebook"><i class="fab fa-facebook-f"></i> Facebook</button>
+                        </div>
+                        <div class="form-success" id="register-success"></div>
+                        <div class="form-error" id="register-fail"></div>
+                        <div class="auth-switch">Đã có tài khoản? <a href="#" id="show-login">Đăng nhập</a></div>
+                    </form>
+                </div>
+            </div>
+    
+    
+    
+    <section id="home" class="main-section">
+        <div class="banner-slider">
+            <div id="banner-container" class="banner-container">
+                <div class="banner-slide">
+                    <img src="./img/img_banner/banner_cera.jpg" alt="Máy pha cafe cầm tay Cera">
+                    <div class="banner-content">
+                        <h2>Máy pha cafe cầm tay Cera</h2>
+                        <p>Thương hiệu Cera - Trải nghiệm pha cafe mọi lúc mọi nơi, tiện lợi và đậm vị</p>
+                        <a href="#cera" class="btn btn-white discover-btn kpn-cera" onclick="showSection('cera'); return false;">Khám phá ngay</a>
+                    </div>
+                </div>
+                <div class="banner-slide">
+                    <img src="./img/img_banner/banner_haan.jpg" alt="Hà An Trà">
+                    <div class="banner-content">
+                        <h2>Hà An Trà - Trà San Tuyết thượng hạng</h2>
+                        <p>Tinh hoa trà Việt từ vùng trà Hà Giang nổi tiếng</p>
+                        <a href="#tea" class="btn btn-white discover-btn kpn-tea" onclick="showSection('tea'); return false;">Khám phá ngay</a>
+                    </div>
+                </div>
+                <div class="banner-slide">
+                    <img src="./img/img_banner/banner_katra.jpg" alt="Cà Phê Hạt">
+                    <div class="banner-content">
+                        <h2>Cà Phê Hạt Đặc Sản Katra</h2>
+                        <p>Tự hào nguồn và chất lượng cà phê tuyệt vời</p>
+                        <a href="#coffee" class="btn btn-white discover-btn kpn-coffee" onclick="showSection('coffee'); return false;">Khám phá ngay</a>
+                    </div>
+                </div>
+                
+                <div class="banner-slide">
+                    <img src="./img/img_banner/banner_viennen.jpg" alt="Viên nén Katra">
+                    <div class="banner-content">
+                        <h2>Viên Nén Cafe Đặc Sản Katra</h2>
+                        <p>Hộp 10 viên tiện lợi - Đa dạng hương vị Red Bourbon, Ethyopia, Geisha, Arabica, Robusta lên men</p>
+                        <a href="#capsule" class="btn btn-white discover-btn kpn-capsule" onclick="showSection('capsule'); return false;">Khám phá ngay</a>
+                    </div>
+                </div>
+            </div>
+        
+        
+        <button id="prev-btn" class="banner-control prev-btn">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button id="next-btn" class="banner-control next-btn">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+        
+        
+        <div class="banner-indicators">
+            <button class="indicator active" data-index="0"></button>
+            <button class="indicator" data-index="1"></button>
+            <button class="indicator" data-index="2"></button>
+            <button class="indicator" data-index="3"></button>
+        </div>
+    </div>
+    
+    
+    <div class="features-section">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Miễn phí vận chuyển</h3>
+                        <p>Cho đơn hàng từ 5.000k</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Bảo hành chính hãng</h3>
+                        <p>12 tháng cho máy pha cafe cầm tay Cera</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Đổi trả dễ dàng</h3>
+                        <p>Trong vòng 7 ngày</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Hỗ trợ 24/7</h3>
+                        <p>Tư vấn mọi lúc</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="category-section">
+        <div class="container">
+            <h2 class="section-title">Danh Mục Sản Phẩm</h2>
+            <div class="category-grid">
+                <a href="#cera-tab" class="category-card" data-category="cera">
+                    <div class="category-image">
+                        <img src="./img/img_banner/logo_cera.jpg" alt="" class="cera-bg">
+                    </div>
+                    <div class="category-info">
+                        <h3>Máy pha cafe cầm tay Cera</h3>
+                        <p>Thương hiệu Cera - Pha cafe mọi lúc mọi nơi, nhỏ gọn tiện lợi</p>
+                    </div>
+                </a>
+                <a href="#tea-tab" class="category-card" data-category="tea">
+                    <div class="category-image">
+                        <img src="./img/img_banner/logo_haan.jpg" alt="" class="haan-bg">
+                    </div>
+                    <div class="category-info">
+                        <h3>Hà An Trà</h3>
+                        <p>Trà thượng hạng từ vùng trà Hà Giang Nổi tiếng</p>
+                    </div>
+                </a>
+                <a href="#coffee-tab" class="category-card" data-category="coffee">
+                    <div class="category-image">
+                        <img src="./img/img_banner/logo_katra.jpg" alt="" class="katra-bg">
+                    </div>
+                    <div class="category-info">
+                        <h3>Cà Phê Hạt Katra</h3>
+                        <p>Tự Hào chất lượng</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="product-section" id="product-tabs">
+        <div class="container">
+            <h2 class="section-title">Sản Phẩm Nổi Bật</h2>
+            
+            
+            <div class="product-tabs">
+                <button id="cera-tab" class="tab-button" data-category="cera">Máy Cera</button>
+                <button id="tea-tab" class="tab-button" data-category="tea">Hà An Trà</button>
+                <button id="coffee-tab" class="tab-button" data-category="coffee">Cà Phê Hạt</button>
+                <button id="capsule-tab" class="tab-button active" data-category="capsule">Viên Nén</button>
+            </div>
+            
+            
+            <div class="product-container">
+                
+                    
+                        <div id="cera-products" class="product-category">
+                            <div class="product-slider-container">
+                                <div class="product-slider slider-tabs" style="display:flex;flex-wrap:nowrap;overflow-x:auto;">
+                                    
+                                    <div class="product-card" data-id="cera1">
+                                        <div class="product-image">
+                                            <img src="./img/img_cera/PMC03s.jpg" alt="Máy Cera Pro">
+                                            <div class="product-tag sale">-15%</div>
+                                        </div>
+                                        <div class="product-details"> 
+                                            <h3 class="product-title">Coffee Machine PCM03S</h3>
+                                            <div class="product-rating">
+                                                <div class="stars">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star-half-alt"></i>
+                                                </div>
+                                                <span class="rating-count">(120)</span>
+                                            </div>
+                                            <div class="product-price">
+                                                <span class="old-price">5.500.000₫</span>
+                                                <div class="current-price">3.550.000₫</div>
+                                            </div>
+                                            <button class="add-to-cart">
+                                                <i class="fas fa-shopping-cart"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="product-card" data-id="cera2">
+                                        <div class="product-image">
+                                            <img src="./img/img_cera/PCM01.jpg" alt="Máy Cera PCM01">
+                                        </div>
+                                        <div class="product-details">
+                                            <h3 class="product-title">Coffee Machine PCM01</h3>
+                                            <div class="product-rating">
+                                                <div class="stars">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                </div>
+                                                <span class="rating-count">(85)</span>
+                                            </div>
+                                            <div class="product-price">
+                                                <div class="current-price">1.949.000₫</div>
+                                            </div>
+                                            <button class="add-to-cart">
+                                                <i class="fas fa-shopping-cart"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="product-card" data-id="cera3">
+                                        <div class="product-image">
+                                            <img src="./img/img_cera/PCM02.jpg" alt="Máy Cera Standard">
+                                            <div class="product-tag sale">-15%</div>
+                                        </div>
+                                        <div class="product-details">
+                                            <h3 class="product-title">Coffee Machine PCM02</h3>
+                                            <div class="product-rating">
+                                                <div class="stars">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star-half-alt"></i>
+                                                </div>
+                                                <span class="rating-count">(120)</span>
+                                            </div>
+                                            <div class="product-price">
+                                                <span class="old-price">2.500.000₫</span>
+                                                <div class="current-price">1.949.000₫</div>
+                                            </div>
+                                            <button class="add-to-cart">
+                                                <i class="fas fa-shopping-cart"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="product-card" data-id="cera4">
+                                        <div class="product-image">
+                                            <img src="./img/img_cera/PCM03.jpg" alt="Cera Standard - Máy pha cafe cầm tay">
+                                        </div>
+                                        <div class="product-details">
+                                            <h3 class="product-title">Coffee Machine PCM03</h3>
+                                            <div class="product-rating">
+                                                <div class="stars">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                </div>
+                                                <span class="rating-count">(85)</span>
+                                            </div>
+                                            <div class="product-price">
+                                                <div class="current-price">3.237.000₫</div>
+                                            </div>
+                                            <button class="add-to-cart">
+                                                <i class="fas fa-shopping-cart"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="product-card" data-id="cera5">
+                                        <div class="product-image">
+                                            <img src="./img/img_cera/PCM04.jpg" alt="Cera Standard - Máy pha cafe cầm tay">
+                                        </div>
+                                        <div class="product-details">
+                                            <h3 class="product-title">Coffee Machine PCM04</h3>
+                                            <div class="product-rating">
+                                                <div class="stars">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                </div>
+                                                <span class="rating-count">(85)</span>
+                                            </div>
+                                            <div class="product-price">
+                                                <div class="current-price">4.200.000₫</div>
+                                            </div>
+                                            <button class="add-to-cart">
+                                                <i class="fas fa-shopping-cart"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="product-card" data-id="cera6">
+                                        <div class="product-image">
+                                            <img src="./img/img_cera/PCM04A.jpg" alt="Cera Standard - Máy pha cafe cầm tay">
+                                        </div>
+                                        <div class="product-details">
+                                            <h3 class="product-title">Coffee Machine PCM04A</h3>
+                                            <div class="product-rating">
+                                                <div class="stars">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                </div>
+                                                <span class="rating-count">(85)</span>
+                                            </div>
+                                            <div class="product-price">
+                                                <div class="current-price">4.200.000₫</div>
+                                            </div>
+                                            <button class="add-to-cart">
+                                                <i class="fas fa-shopping-cart"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="product-card" data-id="cera7">
+                                        <div class="product-image">
+                                            <img src="./img/img_cera/CGE01.jpg" alt="Cera Standard - Máy pha cafe cầm tay">
+                                        </div>
+                                        <div class="product-details">
+                                            <h3 class="product-title">CGE01 Portable Electric Grinder</h3>
+                                            <div class="product-rating">
+                                                <div class="stars">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                </div>
+                                                <span class="rating-count">(85)</span>
+                                            </div>
+                                            <div class="product-price">
+                                                <div class="current-price">2.398.000₫</div>
+                                            </div>
+                                            <button class="add-to-cart">
+                                                <i class="fas fa-shopping-cart"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="product-card" data-id="cera8">
+                                        <div class="product-image">
+                                            <img src="./img/img_cera/CG01.jpg" alt="Máy Cera Premium">
+                                            <div class="product-tag sale">-10%</div>
+                                        </div>
+                                        <div class="product-details">
+                                            <h3 class="product-title">CG01 Manual Version Coffee Grinder</h3>
+                                            <div class="product-rating">
+                                                <div class="stars">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                </div>
+                                                <span class="rating-count">(65)</span>
+                                            </div>
+                                            <div class="product-price">
+                                                <span class="old-price">2.500.000₫</span>
+                                                <div class="current-price">2.398.000₫</div>
+                                            </div>
+                                            <button class="add-to-cart">
+                                                <i class="fas fa-shopping-cart"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="scroll-btn prev-btn" data-direction="left" data-category="cera">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button class="scroll-btn next-btn" data-direction="right" data-category="cera">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div id="tea-products" class="product-category">
+                            <div class="product-slider-container">
+                                <div class="product-slider slider-tabs" style="display:flex;flex-wrap:nowrap;overflow-x:auto;">
+                                    
+                                    <div class="product-card" data-id="tea1">
+                                        <div class="product-image">
+                                            <img src="./img/img_haan/haan_dpmn.jpg" alt="Trà Đông Phương Mĩ Nhân">
+                                            <div class="product-tag new">Mới</div>
+                                        </div>
+                                        <div class="product-details">
+                                            <h3 class="product-title">Trà Đông Phương Mĩ Nhân</h3>
+                                            <div class="product-rating">
+                                                <div class="stars">
+                                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                                                </div>
+                                                <span class="rating-count">(60)</span>
+                                            </div>
+                                            <div class="product-price">
+                                                <span class="old-price">450.000₫</span>
+                                                <div class="current-price">350.000₫</div>
+                                            </div>
+                                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="product-card" data-id="tea2">
+                                        <div class="product-image">
+                                            <img src="./img/img_haan/haan_hongtrarung.jpg" alt="Hồng Trà Rừng">
+                                        </div>
+                                        <div class="product-details">
+                                            <h3 class="product-title">Hồng Trà Rừng</h3>
+                                            <div class="product-rating">
+                                                <div class="stars">
+                                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                                                </div>
+                                                <span class="rating-count">(45)</span>
+                                            </div>
+                                            <div class="product-price">
+                                                <div class="current-price">320.000₫</div>
+                                            </div>
+                                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="product-card" data-id="tea3">
+                                        <div class="product-image">
+                                            <img src="./img/img_haan/haan_hopqua.jpg" alt="Hộp Trà Quà Tặng">
+                                        </div>
+                                        <div class="product-details">
+                                            <h3 class="product-title">Hộp Trà Quà Tặng</h3>
+                                            <div class="product-rating">
+                                                <div class="stars">
+                                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                                                </div>
+                                                <span class="rating-count">(45)</span>
+                                            </div>
+                                            <div class="product-price">
+                                                <div class="current-price">2.200.000₫</div>
+                                            </div>
+                                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="product-card" data-id="tea4">
+                                        <div class="product-image">
+                                            <img src="./img/img_haan/haan_mangtra.jpg" alt="Măng Trà">
+                                        </div>
+                                        <div class="product-details">
+                                            <h3 class="product-title">Măng Trà</h3>
+                                            <div class="product-rating">
+                                                <div class="stars">
+                                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                                                </div>
+                                                <span class="rating-count">(45)</span>
+                                            </div>
+                                            <div class="product-price">
+                                                <div class="current-price">700.000₫</div>
+                                            </div>
+                                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="product-card" data-id="tea5">
+                                        <div class="product-image">
+                                            <img src="./img/img_haan/haan_matonghongtra.jpg" alt="Mật Ong Hồng Trà">
+                                        </div>
+                                        <div class="product-details">
+                                            <h3 class="product-title">Mật Ong Hồng Trà</h3>
+                                            <div class="product-rating">
+                                                <div class="stars">
+                                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                                                </div>
+                                                <span class="rating-count">(45)</span>
+                                            </div>
+                                            <div class="product-price">
+                                                <div class="current-price">170.000₫</div>
+                                            </div>
+                                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="product-card" data-id="tea6">
+                                        <div class="product-image">
+                                            <img src="./img/img_haan/haan_olongsantuyet.jpg" alt="Trà Ô Long San Tuyết">
+                                        </div>
+                                        <div class="product-details">
+                                            <h3 class="product-title">Trà Ô Long San Tuyết</h3>
+                                            <div class="product-rating">
+                                                <div class="stars">
+                                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                                                </div>
+                                                <span class="rating-count">(45)</span>
+                                            </div>
+                                            <div class="product-price">
+                                                <div class="current-price">320.000₫</div>
+                                            </div>
+                                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="product-card" data-id="tea7">
+                                        <div class="product-image">
+                                            <img src="./img/img_haan/haan_traxanh.jpg" alt="Trà Xanh">
+                                        </div>
+                                        <div class="product-details">
+                                            <h3 class="product-title">Trà Xanh</h3>
+                                            <div class="product-rating">
+                                                <div class="stars">
+                                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                                                </div>
+                                                <span class="rating-count">(45)</span>
+                                            </div>
+                                            <div class="product-price">
+                                                <div class="current-price">170.000₫</div>
+                                            </div>
+                                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="scroll-btn prev-btn" data-direction="left" data-category="tea">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button class="scroll-btn next-btn" data-direction="right" data-category="tea">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                
+                
+                <div id="coffee-products" class="product-category">
+                    <div class="product-slider-container">
+                        <div class="product-slider slider-tabs" style="display:flex;flex-wrap:nowrap;overflow-x:auto;">
+                            
+                            <div class="product-card" data-id="coffee1">
+                                <div class="product-image">
+                                    <img src="./img/img_katra/katra_redboubon.jpg" alt="Red Bourbon">
+                                    <div class="product-tag sale">-12%</div>
+                                </div>
+                                <div class="product-details">
+                                    <h3 class="product-title">Red Bourbon Đà Lạt</h3>
+                                    <div class="product-rating">
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                        </div>
+                                        <span class="rating-count">(48)</span>
+                                    </div>
+                                    <div class="product-price">
+                                        <span class="old-price">250.000₫</span>
+                                        <div class="current-price coffee-price">220.000₫</div>
+                                    </div>
+                                    <button class="add-to-cart coffee-cart">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            
+                            <div class="product-card" data-id="coffee2">
+                                <div class="product-image">
+                                    <img src="./img/img_katra/katra_ethy.jpg" alt="Ethiopia Guji">
+                                    <div class="product-tag new">Mới</div>
+                                </div>
+                                <div class="product-details">
+                                    <h3 class="product-title">Ethiopia Guji</h3>
+                                    <div class="product-rating">
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <span class="rating-count">(32)</span>
+                                    </div>
+                                    <div class="product-price">
+                                        <div class="current-price coffee-price">280.000₫</div>
+                                    </div>
+                                    <button class="add-to-cart coffee-cart">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <button class="scroll-btn prev-btn" data-direction="left" data-category="coffee">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="scroll-btn next-btn" data-direction="right" data-category="coffee">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="capsule-products" class="product-category active">
+                    <div class="product-slider-container">
+                        <div class="product-slider slider-tabs" style="display:flex;flex-wrap:nowrap;overflow-x:auto;">
+                            
+                            <div class="product-card" data-id="capsule1">
+                                <div class="product-image">
+                                    <img src="./img/img_viennen/viennen.jpg" alt="Viên nén Red Bourbon">
+                                    <div class="product-tag sale">-12%</div>
+                                </div>
+                                <div class="product-details">
+                                    <h3 class="product-title">Viên nén Red Bourbon</h3>
+                                    <div class="product-rating">
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                        </div>
+                                        <span class="rating-count">(18)</span>
+                                    </div>
+                                    <div class="product-price">
+                                        <span class="old-price">120.000₫</span>
+                                        <div class="current-price">99.000₫</div>
+                                    </div>
+                                    
+                                    <button class="add-to-cart">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="product-card" data-id="capsule2">
+                                <div class="product-image">
+                                    <img src="./img/img_viennen/viennen.jpg" alt="Viên nén Ethyopia">
+                                </div>
+                                <div class="product-details">
+                                    <h3 class="product-title">Viên nén Ethyopia</h3>
+                                    <div class="product-rating">
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                        </div>
+                                        <span class="rating-count">(15)</span>
+                                    </div>
+                                    <div class="product-price">
+                                        <div class="current-price">109.000₫</div>
+                                    </div>
+                                    
+                                    <button class="add-to-cart">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="product-card" data-id="capsule3">
+                                <div class="product-image">
+                                    <img src="./img/img_viennen/viennen.jpg" alt="Viên nén Geisha lên men">
+                                    <div class="product-tag sale">-10%</div>
+                                </div>
+                                <div class="product-details">
+                                    <h3 class="product-title">Viên nén Geisha lên men</h3>
+                                    <div class="product-rating">
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                        </div>
+                                        <span class="rating-count">(22)</span>
+                                    </div>
+                                    <div class="product-price">
+                                        <span class="old-price">130.000₫</span>
+                                        <div class="current-price">115.000₫</div>
+                                    </div>
+                                    
+                                    <button class="add-to-cart">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="product-card" data-id="capsule4">
+                                <div class="product-image">
+                                    <img src="./img/img_viennen/viennen.jpg" alt="Viên nén Arabica lên men">
+                                    <div class="product-tag new">Lên men</div>
+                                </div>
+                                <div class="product-details">
+                                    <h3 class="product-title">Viên nén Arabica lên men</h3>
+                                    <div class="product-rating">
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                        </div>
+                                        <span class="rating-count">(15)</span>
+                                    </div>
+                                    <div class="product-price">
+                                        <span class="old-price">140.000₫</span>
+                                        <div class="current-price">125.000₫</div>
+                                    </div>
+                                    
+                                    <button class="add-to-cart">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="product-card" data-id="capsule5">
+                                <div class="product-image">
+                                    <img src="./img/img_viennen/viennen.jpg" alt="Viên nén Robusta lên men">
+                                    <div class="product-tag sale">-8%</div>
+                                </div>
+                                <div class="product-details">
+                                    <h3 class="product-title">Viên nén Robusta lên men</h3>
+                                    <div class="product-rating">
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                        </div>
+                                        <span class="rating-count">(28)</span>
+                                    </div>
+                                    <div class="product-price">
+                                        <span class="old-price">130.000₫</span>
+                                        <div class="current-price">115.000₫</div>
+                                    </div>
+                                    
+                                    <button class="add-to-cart">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="product-card" data-id="capsule6">
+                                <div class="product-image">
+                                    <img src="./img/img_viennen/viennen.jpg" alt="Viên nén Tổng hợp 5 vị">
+                                    <div class="product-tag new">Tổng hợp</div>
+                                </div>
+                                <div class="product-details">
+                                    <h3 class="product-title">Viên nén Tổng hợp 5 vị</h3>
+                                    <div class="product-rating">
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                        </div>
+                                        <span class="rating-count">(18)</span>
+                                    </div>
+                                    <div class="product-price">
+                                        <span class="old-price">135.000₫</span>
+                                        <div class="current-price">120.000₫</div>
+                                    </div>
+                                    <button class="add-to-cart">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="scroll-btn prev-btn" data-direction="left" data-category="capsule">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="scroll-btn next-btn" data-direction="right" data-category="capsule">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+    
+    
+    </section>
+    
+    <section id="about" class="main-section" style="display:none">
+        <div class="about-section">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <h2 class="section-title-left">Về Chúng Tôi</h2>
+                    <p><strong>Katra Coffee</strong> mang đến những dòng cà phê đặc sản được tuyển chọn từ vùng nguyên liệu nổi tiếng, trồng ở độ cao lý tưởng. Từng hạt cà phê được thu hái và chế biến thủ công, rang mộc để giữ nguyên hương thơm tinh tế cùng hậu ngọt đặc trưng.</p>
+
+                    <p><strong>Hà An Trà</strong> cung cấp các loại trà thượng hạng, tinh tuyển từ những vùng trà lâu đời của Việt Nam. Sản phẩm lưu giữ hương thơm thanh khiết, vị ngọt hậu nhẹ nhàng, mang đến trải nghiệm thưởng trà đậm đà bản sắc.</p>
+
+                    <p><strong>Máy pha cà phê Cera</strong> ứng dụng công nghệ hiện đại và thiết kế sang trọng, giúp bạn dễ dàng pha chế những tách cà phê chuẩn vị tại nhà hoặc tại quán. Đây là trợ thủ đắc lực cho mọi người yêu cà phê.</p>
+                    <a href="#" class="btn btn-primary">Tìm hiểu thêm</a>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-item item1-bd">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-text">Năm kinh nghiệm</div>
+                    </div>
+                    <div class="stat-item item2-bd">
+                        <div class="stat-number">100+</div>
+                        <div class="stat-text">Khách hàng hài lòng</div>
+                    </div>
+                    <div class="stat-item item3-bd">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-text">Tư vấn online</div>
+                    </div>
+                    <div class="stat-item item4-bd">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-text">Sản phẩm đa dạng</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="newsletter-section">
+        <div class="container">
+            <div class="newsletter-container">
+                <h2>Đăng Ký Nhận Thông Tin</h2>
+                <p>Nhận thông tin về sản phẩm mới, khuyến mãi đặc biệt và các mẹo hữu ích.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Nhập email của bạn" required>
+                    <button type="submit" class="btn btn-dark">Đăng ký</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    
+        <footer class="footer">
+    </section>
+    
+    <section id="cera" class="main-section" style="display:none">
+        <div class="product-section">
+            <div class="container">
+                <div class="product-slider slider-section">
+                    
+                    <div class="product-card" data-id="cera1">
+                        <div class="product-image">
+                            <img src="./img/img_cera/PMC03s.jpg" alt="Máy Cera Pro">
+                            <div class="product-tag sale">-15%</div>
+                        </div>
+                        <div class="product-details"> 
+                            <h3 class="product-title">Coffee Machine PCM03S</h3>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="rating-count">(120)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="old-price">5.500.000₫</span>
+                                <div class="current-price">3.550.000₫</div>
+                            </div>
+                            <button class="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card" data-id="cera2">
+                        <div class="product-image">
+                            <img src="./img/img_cera/PCM01.jpg" alt="Máy Cera PCM01">
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Coffee Machine PCM01</h3>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="rating-count">(85)</span>
+                            </div>
+                            <div class="product-price">
+                                <div class="current-price">1.949.000₫</div>
+                            </div>
+                            <button class="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card" data-id="cera3">
+                        <div class="product-image">
+                            <img src="./img/img_cera/PCM02.jpg" alt="Máy Cera Standard">
+                            <div class="product-tag sale">-15%</div>
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Coffee Machine PCM02</h3>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="rating-count">(120)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="old-price">2.500.000₫</span>
+                                <div class="current-price">1.949.000₫</div>
+                            </div>
+                            <button class="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card" data-id="cera4">
+                        <div class="product-image">
+                            <img src="./img/img_cera/PCM03.jpg" alt="Cera Standard - Máy pha cafe cầm tay">
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Coffee Machine PCM03</h3>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="rating-count">(85)</span>
+                            </div>
+                            <div class="product-price">
+                                <div class="current-price">3.237.000₫</div>
+                            </div>
+                            <button class="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card" data-id="cera5">
+                        <div class="product-image">
+                            <img src="./img/img_cera/PCM04.jpg" alt="Cera Standard - Máy pha cafe cầm tay">
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Coffee Machine PCM04</h3>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="rating-count">(85)</span>
+                            </div>
+                            <div class="product-price">
+                                <div class="current-price">4.200.000₫</div>
+                            </div>
+                            <button class="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card" data-id="cera6">
+                        <div class="product-image">
+                            <img src="./img/img_cera/PCM04A.jpg" alt="Cera Standard - Máy pha cafe cầm tay">
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Coffee Machine PCM04A</h3>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="rating-count">(85)</span>
+                            </div>
+                            <div class="product-price">
+                                <div class="current-price">4.200.000₫</div>
+                            </div>
+                            <button class="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card" data-id="cera7">
+                        <div class="product-image">
+                            <img src="./img/img_cera/CGE01.jpg" alt="Cera Standard - Máy pha cafe cầm tay">
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">CGE01 Portable Electric Grinder</h3>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="rating-count">(85)</span>
+                            </div>
+                            <div class="product-price">
+                                <div class="current-price">2.398.000₫</div>
+                            </div>
+                            <button class="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card" data-id="cera8">
+                        <div class="product-image">
+                            <img src="./img/img_cera/CG01.jpg" alt="Máy Cera Premium">
+                            <div class="product-tag sale">-10%</div>
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">CG01 Manual Version Coffee Grinder</h3>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="rating-count">(65)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="old-price">2.500.000₫</span>
+                                <div class="current-price">2.398.000₫</div>
+                            </div>
+                            <button class="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="tea" class="main-section" style="display:none">
+        <div class="product-section">
+            <div class="container">
+                <div class="product-slider slider-section">
+                    
+                    <div class="product-card" data-id="tea1">
+                        <div class="product-image">
+                            <img src="./img/img_haan/haan_dpmn.jpg" alt="Trà Đông Phương Mĩ Nhân">
+                            <div class="product-tag new">Mới</div>
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Trà Đông Phương Mĩ Nhân</h3>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="rating-count">(60)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="old-price">450.000₫</span>
+                                <div class="current-price">350.000₫</div>
+                            </div>
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card" data-id="tea2">
+                        <div class="product-image">
+                            <img src="./img/img_haan/haan_hongtrarung.jpg" alt="Hồng Trà Rừng">
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Hồng Trà Rừng</h3>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                                </div>
+                                <span class="rating-count">(45)</span>
+                            </div>
+                            <div class="product-price">
+                                <div class="current-price">320.000₫</div>
+                            </div>
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card" data-id="tea3">
+                        <div class="product-image">
+                            <img src="./img/img_haan/haan_hopqua.jpg" alt="Hộp Trà Quà Tặng">
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Hộp Trà Quà Tặng</h3>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                                </div>
+                                <span class="rating-count">(45)</span>
+                            </div>
+                            <div class="product-price">
+                                <div class="current-price">2.200.000₫</div>
+                            </div>
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card" data-id="tea4">
+                        <div class="product-image">
+                            <img src="./img/img_haan/haan_mangtra.jpg" alt="Măng Trà">
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Măng Trà</h3>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                                </div>
+                                <span class="rating-count">(45)</span>
+                            </div>
+                            <div class="product-price">
+                                <div class="current-price">700.000₫</div>
+                            </div>
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card" data-id="tea5">
+                        <div class="product-image">
+                            <img src="./img/img_haan/haan_matonghongtra.jpg" alt="Mật Ong Hồng Trà">
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Mật Ong Hồng Trà</h3>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                                </div>
+                                <span class="rating-count">(45)</span>
+                            </div>
+                            <div class="product-price">
+                                <div class="current-price">170.000₫</div>
+                            </div>
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card" data-id="tea6">
+                        <div class="product-image">
+                            <img src="./img/img_haan/haan_olongsantuyet.jpg" alt="Trà Ô Long San Tuyết">
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Trà Ô Long San Tuyết</h3>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                                </div>
+                                <span class="rating-count">(45)</span>
+                            </div>
+                            <div class="product-price">
+                                <div class="current-price">320.000₫</div>
+                            </div>
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card" data-id="tea7">
+                        <div class="product-image">
+                            <img src="./img/img_haan/haan_traxanh.jpg" alt="Trà Xanh">
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Trà Xanh</h3>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                                </div>
+                                <span class="rating-count">(45)</span>
+                            </div>
+                            <div class="product-price">
+                                <div class="current-price">170.000₫</div>
+                            </div>
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="coffee" class="main-section" style="display:none">
+        <div class="product-section">
+            <div class="container">
+                <div class="product-slider slider-section">
+                    
+                    <div class="product-card" data-id="coffee1">
+                        <div class="product-image">
+                            <img src="./img/img_katra/katra_redboubon.jpg" alt="Red Bourbon Đà Lạt">
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Red Bourbon</h3>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="rating-count">(30)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="old-price">300.000₫</span>
+                                <div class="current-price">250.000₫</div>
+                            </div>
+                            <button class="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card" data-id="coffee2">
+                        <div class="product-image">
+                            <img src="./img/img_katra/katra_ethy.jpg" alt="Ethiopia Guji">
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Ethiopia Guji</h3>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="rating-count">(30)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="old-price">300.000₫</span>
+                                <div class="current-price">250.000₫</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    <section id="capsule" class="main-section" style="display:none">
+        <div class="product-section">
+            <div class="container">
+                <div class="product-slider slider-section">
+                    
+                    <div class="product-card" data-id="capsule1">
+                        <div class="product-image">
+                            <img src="./img/img_viennen/viennen.jpg" alt="Viên nén Red Bourbon">
+                            <div class="product-tag sale">-12%</div>
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Viên nén Red Bourbon</h3>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="rating-count">(18)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="old-price">120.000₫</span>
+                                <div class="current-price">99.000₫</div>
+                            </div>
+                            
+                            <button class="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card" data-id="capsule2">
+                        <div class="product-image">
+                            <img src="./img/img_viennen/viennen.jpg" alt="Viên nén Ethyopia">
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Viên nén Ethyopia</h3>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="rating-count">(15)</span>
+                            </div>
+                            <div class="product-price">
+                                <div class="current-price">109.000₫</div>
+                            </div>
+                            
+                            <button class="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card" data-id="capsule3">
+                        <div class="product-image">
+                            <img src="./img/img_viennen/viennen.jpg" alt="Viên nén Geisha lên men">
+                            <div class="product-tag sale">-10%</div>
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Viên nén Geisha lên men</h3>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="rating-count">(22)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="old-price">130.000₫</span>
+                                <div class="current-price">115.000₫</div>
+                            </div>
+                            
+                            <button class="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card" data-id="capsule4">
+                        <div class="product-image">
+                            <img src="./img/img_viennen/viennen.jpg" alt="Viên nén Arabica lên men">
+                            <div class="product-tag new">Lên men</div>
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Viên nén Arabica lên men</h3>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="rating-count">(15)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="old-price">140.000₫</span>
+                                <div class="current-price">125.000₫</div>
+                            </div>
+                            
+                            <button class="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card" data-id="capsule5">
+                        <div class="product-image">
+                            <img src="./img/img_viennen/viennen.jpg" alt="Viên nén Robusta lên men">
+                            <div class="product-tag sale">-8%</div>
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Viên nén Robusta lên men</h3>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="rating-count">(28)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="old-price">130.000₫</span>
+                                <div class="current-price">115.000₫</div>
+                            </div>
+                            
+                            <button class="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card" data-id="capsule6">
+                        <div class="product-image">
+                            <img src="./img/img_viennen/viennen.jpg" alt="Viên nén Tổng hợp 5 vị">
+                            <div class="product-tag new">Tổng hợp</div>
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Viên nén Tổng hợp 5 vị</h3>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="rating-count">(18)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="old-price">135.000₫</span>
+                                <div class="current-price">120.000₫</div>
+                            <button class="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="contact" class="main-section" style="display:none">
+        <div class="contact-section" style="background:#f6eee6; padding:2.5rem 0;">
+            <div class="container" style="max-width:480px; margin:0 auto;">
+                <h2 class="section-title" style="text-align:center;">Liên hệ với KatraCoffee</h2>
+                <p style="text-align:center; color:#7b4b27; margin-bottom:1.2rem;">Bạn có thắc mắc hoặc cần tư vấn? Hãy gửi thông tin cho chúng tôi!</p>
+                <form id="contact-form" style="background:#fff; border-radius:14px; box-shadow:0 4px 24px rgba(123,75,39,0.08); padding:2rem 1.5rem; display:flex; flex-direction:column; gap:1.1rem;">
+                    <div style="display:flex; flex-direction:column; gap:0.5rem;">
+                        <label for="contact-name" style="font-weight:500; color:#a67c52;">Họ và tên</label>
+                        <input id="contact-name" name="name" type="text" required placeholder="Nhập họ tên" style="padding:0.7rem; border-radius:8px; border:1px solid #e0e0e0;">
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:0.5rem;">
+                        <label for="contact-phone" style="font-weight:500; color:#a67c52;">Số điện thoại</label>
+                        <input id="contact-phone" name="phone" type="tel" required placeholder="Nhập số điện thoại" style="padding:0.7rem; border-radius:8px; border:1px solid #e0e0e0;">
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:0.5rem;">
+                        <label for="contact-message" style="font-weight:500; color:#a67c52;">Nội dung</label>
+                        <textarea id="contact-message" name="message" required placeholder="Nhập nội dung liên hệ..." style="padding:0.7rem; border-radius:8px; border:1px solid #e0e0e0; min-height:90px;"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="background:linear-gradient(90deg,#a67c52,#d2b48c); color:#fff; font-weight:600; border:none; border-radius:8px; padding:0.9rem; font-size:1.1rem; cursor:pointer;">Gửi liên hệ</button>
+                    <div id="contact-success" style="display:none; color:#218838; text-align:center; font-weight:500; margin-top:0.7rem;"></div>
+                    <div id="contact-error" style="display:none; color:#e53935; text-align:center; font-weight:500; margin-top:0.7rem;"></div>
+                </form>
+                <div style="text-align:center; margin-top:1.5rem; font-size:1.08rem; color:#a67c52; font-weight:600;">
+                    Hoặc liên hệ trực tiếp qua số điện thoại: <a href="tel:0338415194" style="color:#e53935; text-decoration:none; font-size:1.15rem; font-weight:700;">0338415194</a>
+                </div>
+            </div>
+        </div>
+    </section>
+        <div class="container">
+            <div class="futer">
+                <div class="footer-grid">
+                <div class="footer-col">
+                    <h3 class="footer-title">KatraCoffee</h3>
+                    <p class="footer-text">KatraCoffee - Nơi hội tụ tinh hoa cà phê, trà và thiết bị cafe từ thủ công đến tự động chất lượng cao. Chúng tôi cam kết mang đến trải nghiệm tuyệt vời và sản phẩm an toàn cho sức khỏe.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link" title="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-link" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3 class="footer-title">Sản phẩm nổi bật</h3>
+                    <ul class="footer-links">
+                        <li><a href="#cera" onclick="showSection('cera'); return false;">Máy pha cafe cầm tay Cera</a></li>
+                        <li><a href="#tea" onclick="showSection('tea'); return false;">Trà Hà An</a></li>
+                        <li><a href="#coffee" onclick="showSection('coffee'); return false;">Cà phê hạt độc quyền Katra</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3 class="footer-title">Thông tin</h3>
+                    <ul class="footer-links">
+                        <li><a href="#about">Về KatraCoffee</a></li>
+                        <li><a href="#">Chính sách bảo mật</a></li>
+                        <li><a href="#">Điều khoản sử dụng</a></li>
+                        <li><a href="#">Chính sách vận chuyển</a></li>
+                        <li><a href="#">Chính sách đổi trả</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3 class="footer-title">Liên hệ</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> 158 phố Thượng Đình, Thanh Xuân, Hà Nội</li>
+                        <li><i class="fas fa-phone-alt"></i> 088 716 132</li>
+                        <li><i class="fas fa-envelope"></i> katradacsan158@gmail.com </li>
+                        <li><i class="fas fa-clock"></i> 7:00 - 23:00, Thứ 2 - Chủ nhật</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 KatraCoffee. Tất cả quyền được bảo lưu.</p>
+            </div>
+            </div>
+        </div>
+    </footer>
+    
+    
+    <button id="back-to-top" class="back-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+    
+    
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-body">
+                <div class="product-modal-grid">
+                    <div class="product-modal-image">
+                        <img id="modal-product-image" src="./img/img_katra/katra_redboubon.jpg" alt="Product Image">
+                    </div>
+                    <div class="product-modal-details">
+                        <h2 id="modal-product-title"></h2>
+                        <div class="modal-product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span id="modal-rating-count"></span>
+                        </div>
+                        <div class="modal-product-price">
+                            <span id="modal-old-price" class="old-price"></span>
+                            <div id="modal-current-price" class="current-price"></div>
+                        </div>
+                        <div class="product-description">
+                            <h3>Mô tả sản phẩm</h3>
+                            <p id="modal-product-description"></p>
+                        </div>
+                        
+                        <div class="product-specs" id="modal-specs-default">
+                            <h3>Thông số kỹ thuật</h3>
+                            <a id="show-specs-link" href="#" style="display:block; margin-bottom:0.5rem; color:#a67c52; text-decoration:underline; cursor:pointer; font-weight:500;">Xem thêm</a>
+                            <ul id="modal-product-specs" style="display:none;"></ul>
+                        </div>
+                        
+                        <div class="product-specs" id="modal-specs-tea" style="display:none">
+                            <h3>Thông tin trà Hà An</h3>
+                            <a id="show-tea-specs-link" href="#" style="display:block; margin-bottom:0.5rem; color:#a67c52; text-decoration:underline; cursor:pointer; font-weight:500;">Xem thêm</a>
+                            <ul id="modal-tea-specs" style="display:none;"></ul>
+                        </div>
+                        
+                        <div class="product-specs" id="modal-specs-capsule" style="display:none">
+                            <h3>Thông số Cafe Nén</h3>
+                            <a id="show-capsule-specs-link" href="#" style="display:block; margin-bottom:0.5rem; color:#a67c52; text-decoration:underline; cursor:pointer; font-weight:500;">Xem thêm</a>
+                            <ul id="modal-capsule-specs" style="display:none;"></ul>
+                        </div>
+                        
+                        <div class="product-specs" id="modal-specs-coffee" style="display:none">
+                            <h3>Thông số Cafe Hạt</h3>
+                            <a id="show-coffee-specs-link" href="#" style="display:block; margin-bottom:0.5rem; color:#a67c52; text-decoration:underline; cursor:pointer; font-weight:500;">Xem thêm</a>
+                            <ul id="modal-coffee-specs" style="display:none;"></ul>
+                        </div>
+                        <div class="product-quantity">
+                            <label for="quantity">Số lượng:</label>
+                            <div class="quantity-selector">
+                                <button class="quantity-btn minus">-</button>
+                                <input type="number" id="quantity" value="1" min="1" max="99">
+                                <button class="quantity-btn plus">+</button>
+                            </div>
+                        </div>
+                        <div class="modal-actions">
+                            <button class="btn btn-primary add-to-cart-modal">
+                                <i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng
+                            </button>
+                            <button class="btn btn-outline buy-now">Mua ngay</button>
+                        </div>
+                        <div class="contact-info">
+                            <p><i class="fas fa-phone-alt"></i> Hotline: <strong>0987.654.321</strong></p>
+                            <p><i class="fas fa-truck"></i> Giao hàng miễn phí cho đơn hàng từ 500.000₫</p>
+                            <p><i class="fas fa-shield-alt"></i> Bảo hành chính hãng</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="order-modal" class="modal" style="display:none;">
+        <div class="modal-content order-modal-content" style="max-width: 420px; padding: 2rem 1.5rem; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.18); background: #fff;">
+            <span class="close-modal" data-modal="order-modal" style="font-size: 2rem; color: #888; position: absolute; top: 18px; right: 24px; cursor: pointer;">&times;</span>
+            <h2 class="order-title" style="text-align:center; font-size:1.5rem; font-weight:600; margin-bottom:1.2rem; color:#3a2c1a;">Đặt hàng sản phẩm</h2>
+            <form class="order-form" style="display:flex; flex-direction:column; gap:1rem;">
+                <div id="order-products-list"></div>
+                <div class="form-group" style="display:flex; flex-direction:column;">
+                    <label for="order-name" style="font-weight:500; margin-bottom:0.3rem; color:#6c4c2b;">Họ và tên</label>
+                    <input id="order-name" type="text" name="name" required placeholder="Nhập họ tên" style="background:#f7f7f7; border:1px solid #e0e0e0; border-radius:8px; padding:0.7rem; font-size:1rem; color:#333;">
+                </div>
+                <div class="form-group" style="display:flex; flex-direction:column;">
+                    <label for="order-phone" style="font-weight:500; margin-bottom:0.3rem; color:#6c4c2b;">Số điện thoại</label>
+                    <input id="order-phone" type="tel" name="phone" required placeholder="Nhập số điện thoại" style="background:#f7f7f7; border:1px solid #e0e0e0; border-radius:8px; padding:0.7rem; font-size:1rem; color:#333;">
+                </div>
+                <div class="form-group" style="display:flex; flex-direction:column;">
+                    <label for="order-address" style="font-weight:500; margin-bottom:0.3rem; color:#6c4c2b;">Địa chỉ nhận hàng</label>
+                    <input id="order-address" type="text" name="address" required placeholder="Nhập địa chỉ" style="background:#f7f7f7; border:1px solid #e0e0e0; border-radius:8px; padding:0.7rem; font-size:1rem; color:#333;">
+                </div>
+                <div class="form-group" style="display:flex; flex-direction:column;">
+                    <label for="order-note" style="font-weight:500; margin-bottom:0.3rem; color:#6c4c2b;">Ghi chú</label>
+                    <textarea id="order-note" placeholder="Nhập ghi chú cho đơn hàng..." style="width:100%; padding:0.7rem; border:1px solid #e0e0e0; border-radius:8px; background:#f7f7f7; font-size:1rem; color:#333; resize:none;"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary order-submit" style="background:linear-gradient(90deg,#a67c52,#d2b48c); color:#fff; font-weight:600; border:none; border-radius:8px; padding:0.9rem; font-size:1.1rem; cursor:pointer; transition:background 0.2s;">Gửi đơn hàng</button>
+                <div class="form-success" id="order-success" style="display:none; background:#e6fff2; border:1px solid #b2f5c2; color:#218838; text-align:center; font-weight:500; margin-top:0.7rem; border-radius:8px; padding:1rem; font-size:1.08rem;">
+                    <span style="font-size:1.7rem; vertical-align:middle; margin-right:0.5rem;">✔️</span>
+                    <span id="order-success-msg"></span>
+                </div>
+                <div class="form-error" id="order-error" style="color:red; text-align:center; font-weight:500; margin-top:0.5rem;"></div>
+            </form>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+    // Xoá hiệu ứng bounce sau khi xong
+    document.querySelectorAll('.main-section').forEach(sec => {
+        sec.addEventListener('animationend', function() {
+            sec.classList.remove('bounce-anim');
+        });
+    });
+    </script>
+    <script>
+    // Ẩn/hiện section khi click nav
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const section = this.getAttribute('data-section');
+            document.querySelectorAll('.main-section').forEach(sec => sec.style.display = 'none');
+            document.getElementById(section).style.display = '';
+            // Luôn cuộn mượt đến section, offset header
+            const sectionEl = document.getElementById(section);
+            if (sectionEl) {
+                const header = document.querySelector('.header-sticky');
+                const headerHeight = header ? header.offsetHeight : 0;
+                const sectionTop = sectionEl.getBoundingClientRect().top + window.scrollY - headerHeight;
+                if (Math.abs(window.scrollY - sectionTop) < 5) {
+                    sectionEl.classList.remove('bounce-anim');
+                    void sectionEl.offsetWidth;
+                    sectionEl.classList.add('bounce-anim');
+                } else {
+                    window.scrollTo({top: sectionTop, behavior: 'smooth'});
+                }
+            }
+        });
+    });
+    // Xoá hiệu ứng bounce sau khi xong (phòng trường hợp reload script)
+    document.querySelectorAll('.main-section').forEach(sec => {
+        sec.addEventListener('animationend', function() {
+            sec.classList.remove('bounce-anim');
+        });
+    });
+    </script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+    (function(){
+        emailjs.init('9t8iG4GY8q3MyL_4l');
+    })();
+</script>
+</script>
+
+<script>
+    function forceFeaturedSingleRow(){
+        const sliders = document.querySelectorAll('.product-section#product-tabs .product-slider.slider-tabs');
+        sliders.forEach(s => {
+            s.style.setProperty('display','flex','important');
+            s.style.setProperty('flex-wrap','nowrap','important');
+            s.style.setProperty('overflow-x','auto','important');
+            s.style.setProperty('gap','0.6rem','important');
+            s.style.setProperty('padding-bottom','0.6rem','important');
+        });
+        const cards = document.querySelectorAll('.product-section#product-tabs .product-slider.slider-tabs .product-card');
+        cards.forEach(c => {
+            c.style.setProperty('flex','0 0 calc(33.333% - 0.6rem)','important');
+            c.style.setProperty('max-width','calc(33.333% - 0.6rem)','important');
+            c.style.setProperty('min-width','140px','important');
+            c.style.setProperty('box-sizing','border-box','important');
+            c.style.setProperty('margin','0','important');
+        });
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', forceFeaturedSingleRow);
+    } else {
+        forceFeaturedSingleRow();
+    }
+</script>
+
+<div class="nav-overlay" aria-hidden="true"></div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+emailjs.init('9t8iG4GY8q3MyL_4l');
+document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var form = this;
+    var success = document.getElementById('contact-success');
+    var error = document.getElementById('contact-error');
+    success.style.display = 'none';
+    error.style.display = 'none';
+    emailjs.sendForm('service_3o1xdxo', 'template_a4dpxz6', form)
+        .then(function() {
+            success.textContent = 'Gửi liên hệ thành công! Chúng tôi sẽ phản hồi sớm.';
+            success.style.display = 'block';
+            form.reset();
+        }, function(err) {
+            error.textContent = 'Gửi liên hệ thất bại. Vui lòng thử lại hoặc liên hệ trực tiếp.';
+            error.style.display = 'block';
+        });
+});
+</script>
+<script>
+function showSection(sectionId) {
+    document.querySelectorAll('.main-section').forEach(sec => sec.style.display = 'none');
+    var section = document.getElementById(sectionId);
+    if (section) {
+        section.style.display = '';
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+</script>
+</html>
+<style>
+/* Hiệu ứng bounce cho section khi đã ở đầu trang */
+.bounce-anim {
+    animation: section-bounce 0.5s cubic-bezier(.68,-0.55,.27,1.55);
+}
+@keyframes section-bounce {
+    0% { transform: translateY(0); }
+    20% { transform: translateY(-10px); }
+    40% { transform: translateY(6px); }
+    60% { transform: translateY(-4px); }
+    80% { transform: translateY(2px); }
+    100% { transform: translateY(0); }
+}
+</style>
